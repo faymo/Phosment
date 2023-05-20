@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phosment</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/script.js"></script>
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="image-container">
+      <img src="C:\Users\Rushabh\Hackathons\SpringHacks Hackathon\toronto-lake-ontario.jpg" width="1880px">
+      <img src="C:\Users\Rushabh\Hackathons\rectangle-removebg-preview.png" width="1000px" class="overlay-image">
+      <img src="C:\Users\Rushabh\Hackathons\environment-logo-icon-design-template-free-vector-removebg-preview.png" width="200px" class="overlay-image-logo">
+      <div class="overlay-text">
+        <h1 class="header-title", class='custom font'>Phosment</h1>
+        <p class='custom font', class="overlay-text p">Cleaner Water For All</p>
+      </div>
+    </div>
+  <style>
+      .image-container {
+        position: relative;
+        text-align: center;
+      }
+
+      .overlay-image {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .overlay-image-logo {
+        position: absolute;
+        left: 35%;
+        top: 50%;
+        transform: translate(-55%, -60%);
+      }
+      
+      .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: black;
+      }
+
+      .overlay-text h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .overlay-text p {
+        font-size: 25px;
+      }
+
+      .header-title {
+        font-size: 100px; /* Adjust the value to increase or decrease the font size */
+      }
+
+      .custom-font {
+        font-family: "Times New Roman", arial; /* Replace with the desired font family */
+      }
+    </style>
+
+  </header>
+  <style>
+    /* CSS styles for the header 
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px; value to control the roundness
+    } */
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+    
+    .centered-text {
+      text-align: center;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <script src="js/script.js"></script>
+  <style>    
+    #map {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h2 class='centered-text'>Eutrophication Map</h2>
+    </section>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <style>
+    #map {
+      height: 550px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
+
+  <script>
+    // Initialize the map
+    var map = L.map('map').setView([43.6333, -77.8271], 2);
+
+    // Add a tile layer for the map background
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      minZoom: 9,
+      maxZoom: 18,
+    }).addTo(map);
+
+    /* Load the CSV file
+    fetch('SpringHacks Hackathon\Lake_Ontario_Transect_QW_Table_4.csv')
+      .then(response => response.text())
+      .then(csvData => {
+        // Parse the CSV data
+        const parsedData = Papa.parse(csvData, { header: true }).data;
+      
+        const table = {
+            0: 14.6,
+            1: 14.2,
+            2: 13.8,
+            3: 13.5,
+            4: 13.1,
+            5: 12.8,
+            6: 12.5,
+            7: 12.2,
+            8: 11.9,
+            9: 11.6,
+            10: 11.3,
+            11: 11.1,
+            12: 10.8,
+            13: 10.6,
+            14: 10.4,
+            15: 10.2,
+            16: 10.0,
+            17: 9.7,
+            18: 9.5,
+            19: 9.4,
+            20: 9.2,
+            21: 9.0,
+            22: 8.8,
+            23: 8.7,
+            24: 8.5,
+            25: 8.4,
+            26: 8.2,
+            27: 8.1,
+            28: 7.9,
+            29: 7.8,
+            30: 7.6
+        };
+
+        // Loop through the parsed data and add markers or polygons to the map
+        parsedData.forEach(item => {
+          const latitude = parseFloat(item.latitude);
+          const longitude = parseFloat(item.longitude);
+          const BOD = parseFloat(item.BOD);
+
+          const referenceBOD = table[temperature];
+          const saturation = (Math.abs(referenceBOD - BOD) / BOD) * 100;
+
+          let color;
+
+          if (saturation >= 65) {
+            color = 'red'; // Set color for high BOD values
+          } else {
+            color = 'blue'; // Set color for low BOD values
+          }*/
+
+            // Add a polygon indicating an unsafe area
+          var coloredPolygon = L.polygon([
+            [43.233250, -77.538299],
+            [43.224245, -77.540541],
+            [43.201350, -77.534176],
+            [43.174440, -77.530058],
+            [43.176568, -77.516316],
+            [43.207283, -77.519970],
+            [43.225621, -77.533150],
+            [43.236877, -77.517519]
+          ], {
+            color: 'red',
+            fillColor: 'red',
+            fillOpacity: 0.5
+          }).addTo(map);
+
+            var coloredPolygon = L.polygon([
+            [43.273857, -76.974282],
+            [43.262358, -76.993178],
+            [43.244130, -76.974739],
+            [43.251905, -76.972034],
+            [43.237127, -76.957731],
+            [43.242434, -76.950398],
+            [43.211109, -76.926629],
+            [43.273311, -76.940051]
+          ], {
+            color: 'green',
+            fillColor: 'green',
+            fillOpacity: 0.5
+          }).addTo(map);
+      </script>
+    </body>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/geodesy@1.1.1/latlon-ellipsoidal-vincenty.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/statistics-101@2.0.1/lib/normal-dist.min.js"></script>
+</head>
+
+<body>
+  <h1 class="centered-text">Phosphate Runoff Contamination Risk Calculator</h1>
+  <section>
+    <h2></h2>
+    <form>
+      <label for="Address">Address:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="postalCode">or Postal Code:</label>
+      <input type="text" id="PostalCode" name="PostalCode" required>
+      <button onclick="calculate()">Submit</button>
+    </form>
+    <h2></h2>
+  </section>
+
+
+  <div id="result"></div>
+
+  <script>
+    function calculate() {
+      class LatLon {
+        constructor(lat, lon) {
+          this.lat = lat;
+          this.lon = lon;
+        }
+
+        distanceTo(other) {
+          const lat1 = this.lat;
+          const lon1 = this.lon;
+          const lat2 = other.lat;
+          const lon2 = other.lon;
+
+          const earthRadiusKm = 6371;
+
+          const degToRad = (deg) => deg * (Math.PI / 180);
+          const dLat = degToRad(lat2 - lat1);
+          const dLon = degToRad(lon2 - lon1);
+
+          const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(degToRad(lat1)) *
+              Math.cos(degToRad(lat2)) *
+              Math.sin(dLon / 2) *
+              Math.sin(dLon / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          const distance = earthRadiusKm * c;
+
+          return distance;
+        }
+      }
+
+      class NormalDist {
+        constructor(mean, standardDeviation) {
+          this.mean = mean;
+          this.standardDeviation = standardDeviation;
+        }
+
+        cdf(x) {
+
+        const erf = (x) => {
+          const a1 =  0.254829592;
+          const a2 = -0.284496736;
+          const a3 =  1.421413741;
+          const a4 = -1.453152027;
+          const a5 =  1.061405429;
+          const p  =  0.3275911;
+
+          const sign = (x >= 0) ? 1 : -1;
+          x = Math.abs(x);
+
+          const t = 1.0 / (1.0 + p * x);
+          const y = ((((a5 * t + a4) * t) + a3) * t + a2) * t + a1;
+          return 1 - (y * Math.exp(-x * x));
+        };
+
+        const z = (x - this.mean) / (this.standardDeviation * Math.sqrt(2));
+        return 0.5 * (1 + erf(z));
+        }
+      }
+
+      // Define the coordinates
+      const coords_1 = new LatLon(43.84522326194627, -79.2877853082853);
+      const coords_2 = new LatLon(43.86043808702895, -79.27805479665885);
+
+      // Calculate the distance using the geodesic distance formula
+      const distance = coords_1.distanceTo(coords_2);
+
+      // Calculate the CDF using the NormalDist class
+      const normalDist = new NormalDist(0, 1.5);
+      const cdf = normalDist.cdf(distance);
+
+      // Display the result
+      if (cdf > 0.5) {
+        document.getElementById('result').innerHTML = "Do NOT use highly concentrated phosphate fertilizers here, there is a " + Math.round(cdf*100) + "% chance for phosphate to enter a major waterway";
+      } else {
+        document.getElementById('result').innerHTML = "You are at an acceptable range to use a pesticide";
+      }
+    }
+  </script>
+</body>
+
+<head>
+  <title class="centered-text">Phosphate Concentration Calculator</title>
+</head>
+<body>
+  <h1 class="centered-text">Phosphate Concentration Calculator</h1>
+
+  <section>
+    <h2 class="centered-text">Input Phosphate Concentration</h2>
+    <form>
+      <label for="concentration", class="centered-text">Phosphate Concentration:</label>
+      <input type="text" id="concentration" name="concentration" required>
+      <button type="button" onclick="checkSafety()", class="centered-text">Check Safety</button>
+    </form>
+  </section>
+
+  <div id="resul"></div>
+
+  <script>
+    function checkSafety() {
+      const concentrationInput = document.getElementById('concentration');
+      
+      const fertilizers = {
+      'Scotts Turf Builder Lawn Food': 0,
+      'Scotts Turf Builder Green Max Lawn Food': 0,
+      'Scotts Turf Builder UltraFeed Lawn Food': 0,
+      'Scotts Turf Builder Starter Lawn': 25,
+      };
+
+      const level = fertilizers[concentrationInput];
+
+      // Check if the pesticide is safe
+      if (concentrationInput !== 'Scotts Turf Builder Starter Lawn') {
+        document.getElementById('resul').innerHTML = "The phosphate concentration exceeds the safe level. It is not recommended to use this pesticide.";
+      } else {
+        document.getElementById('resul').innerHTML = "This pesticide has a phosphate concentration within the safe levels. It is safe to use.";
+      }
+    }
+  </script>
+</body>
+
+<body>
+    <section>
+      <h2 class="centered-text">About</h2>
+      <p class="centered-text">Phosment is a environmental app aimed at fighting eutrophication in the Great Lakes. We monitor water quality levels through calculation of BOD and we determine ways for you to decrease your impact on the eutrophication of the Great Lakes. With our team, we hope to fight against the rising threat that eutrophication causes towards biodiversity and public health.</p>
+    </section>
+
+
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Phosment. All rights reserved.</p>
+  </footer>
+</body>
+</html>
